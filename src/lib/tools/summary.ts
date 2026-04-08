@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { generateText } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { getModel } from "../model";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -62,7 +62,7 @@ export async function summarizeThread(
   }
 
   const { text } = await generateText({
-    model: anthropic("claude-sonnet-4-6"),
+    model: getModel(),
     system:
       "あなたは会話要約の専門家です。与えられた会話を簡潔に要約してください。重要なポイント、決定事項、アクションアイテムがあれば明記してください。日本語で回答してください。",
     prompt: `以下の会話を要約してください:\n\n${textToSummarize}`,

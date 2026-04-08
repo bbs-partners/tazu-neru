@@ -1,6 +1,6 @@
 import { generateText, tool, stepCountIs } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
 import { z } from "zod";
+import { getModel } from "./model";
 import { getMyTasks, createTask, completeTask } from "./tools/tasks";
 import { getCalendar, checkFreeTime } from "./tools/calendar";
 import { summarizeThread } from "./tools/summary";
@@ -22,7 +22,7 @@ export async function handleMessage(
   text: string,
 ): Promise<string> {
   const { text: reply } = await generateText({
-    model: anthropic("claude-sonnet-4-6"),
+    model: getModel(),
     system: systemPrompt,
     prompt: text,
     tools: {
